@@ -1,0 +1,23 @@
+{
+  "total_samples": 1350,
+  "router_acc": 0.9859259259259259,
+  "expert_oracle_acc": 0.942962962962963,
+  "end_to_end_leaf_acc": 0.9325925925925926,
+  "per_group": {
+    "animal": {
+      "samples": 450,
+      "oracle_acc": 0.9666666666666667,
+      "end_to_end_acc": 0.9577777777777777
+    },
+    "vehicle": {
+      "samples": 450,
+      "oracle_acc": 0.9666666666666667,
+      "end_to_end_acc": 0.96
+    },
+    "artifact": {
+      "samples": 450,
+      "oracle_acc": 0.8955555555555555,
+      "end_to_end_acc": 0.88
+    }
+  }
+}

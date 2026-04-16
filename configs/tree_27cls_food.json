@@ -1,0 +1,33 @@
+{
+  "name": "imagenet_27cls_food",
+  "dataset_repo": "evanarlian/imagenet_1k_resized_256",
+  "classes": [
+    {"label_id": 11, "synset": "n01531178", "leaf_name": "goldfinch", "level1": "animal", "level2": "bird"},
+    {"label_id": 15, "synset": "n01558993", "leaf_name": "robin", "level1": "animal", "level2": "bird"},
+    {"label_id": 22, "synset": "n01614925", "leaf_name": "bald_eagle", "level1": "animal", "level2": "bird"},
+    {"label_id": 207, "synset": "n02099601", "leaf_name": "golden_retriever", "level1": "animal", "level2": "canine"},
+    {"label_id": 235, "synset": "n02106662", "leaf_name": "german_shepherd", "level1": "animal", "level2": "canine"},
+    {"label_id": 236, "synset": "n02107142", "leaf_name": "doberman", "level1": "animal", "level2": "canine"},
+    {"label_id": 283, "synset": "n02123394", "leaf_name": "persian_cat", "level1": "animal", "level2": "feline"},
+    {"label_id": 284, "synset": "n02123597", "leaf_name": "siamese_cat", "level1": "animal", "level2": "feline"},
+    {"label_id": 285, "synset": "n02124075", "leaf_name": "egyptian_cat", "level1": "animal", "level2": "feline"},
+    {"label_id": 404, "synset": "n02690373", "leaf_name": "airliner", "level1": "vehicle", "level2": "aircraft"},
+    {"label_id": 405, "synset": "n02692877", "leaf_name": "airship", "level1": "vehicle", "level2": "aircraft"},
+    {"label_id": 895, "synset": "n04552348", "leaf_name": "warplane", "level1": "vehicle", "level2": "aircraft"},
+    {"label_id": 407, "synset": "n02701002", "leaf_name": "ambulance", "level1": "vehicle", "level2": "road_vehicle"},
+    {"label_id": 555, "synset": "n03345487", "leaf_name": "fire_engine", "level1": "vehicle", "level2": "road_vehicle"},
+    {"label_id": 817, "synset": "n04285008", "leaf_name": "sports_car", "level1": "vehicle", "level2": "road_vehicle"},
+    {"label_id": 472, "synset": "n02951358", "leaf_name": "canoe", "level1": "vehicle", "level2": "watercraft"},
+    {"label_id": 510, "synset": "n03095699", "leaf_name": "container_ship", "level1": "vehicle", "level2": "watercraft"},
+    {"label_id": 814, "synset": "n04273569", "leaf_name": "speedboat", "level1": "vehicle", "level2": "watercraft"},
+    {"label_id": 951, "synset": "n07749582", "leaf_name": "lemon", "level1": "food", "level2": "fruit"},
+    {"label_id": 954, "synset": "n07753592", "leaf_name": "banana", "level1": "food", "level2": "fruit"},
+    {"label_id": 957, "synset": "n07768694", "leaf_name": "pomegranate", "level1": "food", "level2": "fruit"},
+    {"label_id": 937, "synset": "n07714990", "leaf_name": "broccoli", "level1": "food", "level2": "vegetable"},
+    {"label_id": 938, "synset": "n07715103", "leaf_name": "cauliflower", "level1": "food", "level2": "vegetable"},
+    {"label_id": 943, "synset": "n07718472", "leaf_name": "cucumber", "level1": "food", "level2": "vegetable"},
+    {"label_id": 933, "synset": "n07697313", "leaf_name": "cheeseburger", "level1": "food", "level2": "prepared_food"},
+    {"label_id": 934, "synset": "n07697537", "leaf_name": "hotdog", "level1": "food", "level2": "prepared_food"},
+    {"label_id": 963, "synset": "n07873807", "leaf_name": "pizza", "level1": "food", "level2": "prepared_food"}
+  ]
+}

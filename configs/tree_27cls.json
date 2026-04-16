@@ -1,0 +1,33 @@
+{
+  "name": "imagenet_27cls",
+  "dataset_repo": "evanarlian/imagenet_1k_resized_256",
+  "classes": [
+    {"label_id": 11, "synset": "n01531178", "leaf_name": "goldfinch", "level1": "animal", "level2": "bird"},
+    {"label_id": 15, "synset": "n01558993", "leaf_name": "robin", "level1": "animal", "level2": "bird"},
+    {"label_id": 22, "synset": "n01614925", "leaf_name": "bald_eagle", "level1": "animal", "level2": "bird"},
+    {"label_id": 207, "synset": "n02099601", "leaf_name": "golden_retriever", "level1": "animal", "level2": "canine"},
+    {"label_id": 235, "synset": "n02106662", "leaf_name": "german_shepherd", "level1": "animal", "level2": "canine"},
+    {"label_id": 236, "synset": "n02107142", "leaf_name": "doberman", "level1": "animal", "level2": "canine"},
+    {"label_id": 283, "synset": "n02123394", "leaf_name": "persian_cat", "level1": "animal", "level2": "feline"},
+    {"label_id": 284, "synset": "n02123597", "leaf_name": "siamese_cat", "level1": "animal", "level2": "feline"},
+    {"label_id": 285, "synset": "n02124075", "leaf_name": "egyptian_cat", "level1": "animal", "level2": "feline"},
+    {"label_id": 404, "synset": "n02690373", "leaf_name": "airliner", "level1": "vehicle", "level2": "aircraft"},
+    {"label_id": 405, "synset": "n02692877", "leaf_name": "airship", "level1": "vehicle", "level2": "aircraft"},
+    {"label_id": 895, "synset": "n04552348", "leaf_name": "warplane", "level1": "vehicle", "level2": "aircraft"},
+    {"label_id": 407, "synset": "n02701002", "leaf_name": "ambulance", "level1": "vehicle", "level2": "road_vehicle"},
+    {"label_id": 555, "synset": "n03345487", "leaf_name": "fire_engine", "level1": "vehicle", "level2": "road_vehicle"},
+    {"label_id": 817, "synset": "n04285008", "leaf_name": "sports_car", "level1": "vehicle", "level2": "road_vehicle"},
+    {"label_id": 472, "synset": "n02951358", "leaf_name": "canoe", "level1": "vehicle", "level2": "watercraft"},
+    {"label_id": 510, "synset": "n03095699", "leaf_name": "container_ship", "level1": "vehicle", "level2": "watercraft"},
+    {"label_id": 814, "synset": "n04273569", "leaf_name": "speedboat", "level1": "vehicle", "level2": "watercraft"},
+    {"label_id": 402, "synset": "n02676566", "leaf_name": "acoustic_guitar", "level1": "artifact", "level2": "musical_instrument"},
+    {"label_id": 486, "synset": "n02992211", "leaf_name": "cello", "level1": "artifact", "level2": "musical_instrument"},
+    {"label_id": 579, "synset": "n03452741", "leaf_name": "grand_piano", "level1": "artifact", "level2": "musical_instrument"},
+    {"label_id": 587, "synset": "n03481172", "leaf_name": "hammer", "level1": "artifact", "level2": "tool"},
+    {"label_id": 740, "synset": "n03995372", "leaf_name": "power_drill", "level1": "artifact", "level2": "tool"},
+    {"label_id": 792, "synset": "n04208210", "leaf_name": "shovel", "level1": "artifact", "level2": "tool"},
+    {"label_id": 526, "synset": "n03179701", "leaf_name": "desk", "level1": "artifact", "level2": "furniture"},
+    {"label_id": 559, "synset": "n03376595", "leaf_name": "folding_chair", "level1": "artifact", "level2": "furniture"},
+    {"label_id": 703, "synset": "n03891251", "leaf_name": "park_bench", "level1": "artifact", "level2": "furniture"}
+  ]
+}

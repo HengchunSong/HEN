@@ -1,0 +1,74 @@
+{
+  "total_samples": 1350,
+  "top_router_acc": 0.9925925925925926,
+  "mid_router_oracle_acc": 0.9888888888888889,
+  "leaf_expert_oracle_acc": 0.965925925925926,
+  "end_to_end_leaf_acc": 0.9533333333333334,
+  "per_level1": {
+    "animal": {
+      "samples": 450,
+      "mid_router_oracle_acc": 0.9933333333333333,
+      "leaf_expert_oracle_acc": 0.9733333333333334,
+      "end_to_end_acc": 0.9622222222222222
+    },
+    "vehicle": {
+      "samples": 450,
+      "mid_router_oracle_acc": 0.9955555555555555,
+      "leaf_expert_oracle_acc": 0.96,
+      "end_to_end_acc": 0.9533333333333334
+    },
+    "food": {
+      "samples": 450,
+      "mid_router_oracle_acc": 0.9777777777777777,
+      "leaf_expert_oracle_acc": 0.9644444444444444,
+      "end_to_end_acc": 0.9444444444444444
+    }
+  },
+  "per_level2": {
+    "bird": {
+      "samples": 150,
+      "leaf_expert_oracle_acc": 1.0,
+      "end_to_end_acc": 0.9933333333333333
+    },
+    "canine": {
+      "samples": 150,
+      "leaf_expert_oracle_acc": 0.9866666666666667,
+      "end_to_end_acc": 0.98
+    },
+    "feline": {
+      "samples": 150,
+      "leaf_expert_oracle_acc": 0.9333333333333333,
+      "end_to_end_acc": 0.9133333333333333
+    },
+    "aircraft": {
+      "samples": 150,
+      "leaf_expert_oracle_acc": 0.92,
+      "end_to_end_acc": 0.9133333333333333
+    },
+    "road_vehicle": {
+      "samples": 150,
+      "leaf_expert_oracle_acc": 0.9666666666666667,
+      "end_to_end_acc": 0.9533333333333334
+    },
+    "watercraft": {
+      "samples": 150,
+      "leaf_expert_oracle_acc": 0.9933333333333333,
+      "end_to_end_acc": 0.9933333333333333
+    },
+    "fruit": {
+      "samples": 150,
+      "leaf_expert_oracle_acc": 0.9733333333333334,
+      "end_to_end_acc": 0.9333333333333333
+    },
+    "vegetable": {
+      "samples": 150,
+      "leaf_expert_oracle_acc": 0.96,
+      "end_to_end_acc": 0.94
+    },
+    "prepared_food": {
+      "samples": 150,
+      "leaf_expert_oracle_acc": 0.96,
+      "end_to_end_acc": 0.96
+    }
+  }
+}

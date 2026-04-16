@@ -1,0 +1,33 @@
+{
+  "name": "imagenet_27cls_structure_place",
+  "dataset_repo": "evanarlian/imagenet_1k_resized_256",
+  "classes": [
+    {"label_id": 11, "synset": "n01531178", "leaf_name": "goldfinch", "level1": "animal", "level2": "bird"},
+    {"label_id": 15, "synset": "n01558993", "leaf_name": "robin", "level1": "animal", "level2": "bird"},
+    {"label_id": 22, "synset": "n01614925", "leaf_name": "bald_eagle", "level1": "animal", "level2": "bird"},
+    {"label_id": 207, "synset": "n02099601", "leaf_name": "golden_retriever", "level1": "animal", "level2": "canine"},
+    {"label_id": 235, "synset": "n02106662", "leaf_name": "german_shepherd", "level1": "animal", "level2": "canine"},
+    {"label_id": 236, "synset": "n02107142", "leaf_name": "doberman", "level1": "animal", "level2": "canine"},
+    {"label_id": 283, "synset": "n02123394", "leaf_name": "persian_cat", "level1": "animal", "level2": "feline"},
+    {"label_id": 284, "synset": "n02123597", "leaf_name": "siamese_cat", "level1": "animal", "level2": "feline"},
+    {"label_id": 285, "synset": "n02124075", "leaf_name": "egyptian_cat", "level1": "animal", "level2": "feline"},
+    {"label_id": 404, "synset": "n02690373", "leaf_name": "airliner", "level1": "vehicle", "level2": "aircraft"},
+    {"label_id": 405, "synset": "n02692877", "leaf_name": "airship", "level1": "vehicle", "level2": "aircraft"},
+    {"label_id": 895, "synset": "n04552348", "leaf_name": "warplane", "level1": "vehicle", "level2": "aircraft"},
+    {"label_id": 407, "synset": "n02701002", "leaf_name": "ambulance", "level1": "vehicle", "level2": "road_vehicle"},
+    {"label_id": 555, "synset": "n03345487", "leaf_name": "fire_engine", "level1": "vehicle", "level2": "road_vehicle"},
+    {"label_id": 817, "synset": "n04285008", "leaf_name": "sports_car", "level1": "vehicle", "level2": "road_vehicle"},
+    {"label_id": 472, "synset": "n02951358", "leaf_name": "canoe", "level1": "vehicle", "level2": "watercraft"},
+    {"label_id": 510, "synset": "n03095699", "leaf_name": "container_ship", "level1": "vehicle", "level2": "watercraft"},
+    {"label_id": 814, "synset": "n04273569", "leaf_name": "speedboat", "level1": "vehicle", "level2": "watercraft"},
+    {"label_id": 497, "synset": "n03028079", "leaf_name": "church", "level1": "structure_place", "level2": "religious_building"},
+    {"label_id": 663, "synset": "n03781244", "leaf_name": "monastery", "level1": "structure_place", "level2": "religious_building"},
+    {"label_id": 668, "synset": "n03788195", "leaf_name": "mosque", "level1": "structure_place", "level2": "religious_building"},
+    {"label_id": 415, "synset": "n02776631", "leaf_name": "bakery", "level1": "structure_place", "level2": "shop_public_place"},
+    {"label_id": 454, "synset": "n02871525", "leaf_name": "bookshop", "level1": "structure_place", "level2": "shop_public_place"},
+    {"label_id": 582, "synset": "n03461385", "leaf_name": "grocery_store", "level1": "structure_place", "level2": "shop_public_place"},
+    {"label_id": 821, "synset": "n04311004", "leaf_name": "steel_arch_bridge", "level1": "structure_place", "level2": "bridge"},
+    {"label_id": 839, "synset": "n04366367", "leaf_name": "suspension_bridge", "level1": "structure_place", "level2": "bridge"},
+    {"label_id": 888, "synset": "n04532670", "leaf_name": "viaduct", "level1": "structure_place", "level2": "bridge"}
+  ]
+}

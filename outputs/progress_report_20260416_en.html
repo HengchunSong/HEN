@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HEN Project Progress Report</title>
+  <style>
+    :root {
+      --bg: #f3efe6;
+      --paper: #fffaf2;
+      --ink: #1b1a18;
+      --muted: #6a6459;
+      --line: #d7cdbf;
+      --accent: #1c6b5a;
+      --accent-soft: #d7efe8;
+      --warn: #9f4f1b;
+      --warn-soft: #f7dfcf;
+      --good: #245d2c;
+      --good-soft: #dff0df;
+      --shadow: 0 18px 50px rgba(41, 36, 29, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(28, 107, 90, 0.10), transparent 28rem),
+        radial-gradient(circle at top right, rgba(159, 79, 27, 0.08), transparent 32rem),
+        linear-gradient(180deg, #f8f4ec 0%, var(--bg) 100%);
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    .page {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 28px auto 56px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(255, 250, 242, 0.95), rgba(245, 239, 230, 0.95));
+      border: 1px solid rgba(215, 205, 191, 0.9);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 34px 34px 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -64px;
+      top: -64px;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(28, 107, 90, 0.18), transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(28, 107, 90, 0.10);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      margin-top: 14px;
+      font-size: clamp(34px, 4.8vw, 58px);
+      line-height: 1.05;
+      max-width: 10.5em;
+    }
+
+    .hero p {
+      max-width: 72ch;
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .meta {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .meta span {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.65);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .card {
+      grid-column: span 3;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 20px 20px 18px;
+    }
+
+    .card h3 {
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .metric {
+      font-size: 34px;
+      line-height: 1;
+      color: var(--accent);
+      font-weight: 800;
+      margin: 10px 0 8px;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .section {
+      margin-top: 22px;
+      background: rgba(255, 250, 242, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 26px 28px;
+    }
+
+    .section h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .section > p {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    .status-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .pill-card {
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .pill-card strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .pill-card span {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 14px 14px;
+      background: #f2ece2;
+      color: #3b372f;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    tbody td {
+      padding: 13px 14px;
+      border-bottom: 1px solid rgba(215, 205, 191, 0.6);
+      vertical-align: top;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .tag.good {
+      color: var(--good);
+      background: var(--good-soft);
+    }
+
+    .tag.warn {
+      color: var(--warn);
+      background: var(--warn-soft);
+    }
+
+    .tag.accent {
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .note-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .note {
+      padding: 18px 18px 16px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .note h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .note ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .paths {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .path {
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-family: Consolas, "SFMono-Regular", monospace;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .footer {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 920px) {
+      .card {
+        grid-column: span 6;
+      }
+
+      .status-strip,
+      .note-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100vw - 20px, 1180px);
+        margin-top: 10px;
+      }
+
+      .hero,
+      .section {
+        padding: 20px;
+        border-radius: 20px;
+      }
+
+      .card {
+        grid-column: span 12;
+      }
+
+      table,
+      thead,
+      tbody,
+      th,
+      td,
+      tr {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tbody tr {
+        border-bottom: 1px solid var(--line);
+        padding: 10px 0;
+      }
+
+      tbody td {
+        border: none;
+        padding: 6px 0;
+      }
+
+      tbody td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        margin-bottom: 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="eyebrow">HEN Progress Report</span>
+      <h1>Current Progress Report for the HEN Project</h1>
+      <p>
+        This report summarizes the main experimental results currently available in the repository,
+        covering classic HEN, modular HEN, coarse-to-fine HEN, attention/crop-based structure exploration,
+        and lightweight backbone search. The report date is 2026-04-16, and the latest experimental
+        artifacts referenced here were produced on 2026-04-05.
+      </p>
+      <div class="meta">
+        <span>Dataset: 27-class ImageNet subset</span>
+        <span>Hierarchy: 3 x 3 x 3</span>
+        <span>Training samples: 35,100</span>
+        <span>Validation samples: 1,350</span>
+        <span>Project root: D:\school\Neural\HEN</span>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h3>Best Overall Accuracy</h3>
+        <div class="metric">96.89%</div>
+        <p>Flat ConvNeXt-Tiny remains the best overall 27-way leaf classifier.</p>
+      </article>
+      <article class="card">
+        <h3>Best HEN Accuracy</h3>
+        <div class="metric">95.85%</div>
+        <p>The classic 2-level HEN is still the strongest HEN result; the best 3-level HEN reached 95.63%.</p>
+      </article>
+      <article class="card">
+        <h3>Best Coarse Top Router</h3>
+        <div class="metric">99.33%</div>
+        <p>The coarse-to-fine top router already passes 99%, but downstream leaf performance still trails the older HEN line.</p>
+      </article>
+      <article class="card">
+        <h3>Lightweight Search Status</h3>
+        <div class="metric">&lt;95%</div>
+        <p>So far, neither flat nor HEN variants at roughly the 1M-parameter scale have held the 95% target line.</p>
+      </article>
+    </section>
+
+    <section class="section">
+      <h2>Stage Summary</h2>
+      <p>
+        The project has already completed dataset construction, classic HEN validation, flat baseline establishment,
+        and several generations of new architectural exploration. The clearest conclusion at this stage is:
+        hierarchical modeling is effective, but the best HEN result is still slightly below the best flat baseline.
+      </p>
+      <div class="status-strip">
+        <div class="pill-card">
+          <strong>Completed</strong>
+          <span>27-class hierarchical dataset, 2-level HEN, 3-level HEN, flat baselines, modular HEN, coarse-to-fine HEN, and misclassified-image export.</span>
+        </div>
+        <div class="pill-card">
+          <strong>Validated but not superior</strong>
+          <span>Shared-trunk modularization, residual leaf experts, food high-resolution branches, feature branches, and attention crop variants.</span>
+        </div>
+        <div class="pill-card">
+          <strong>Main current issue</strong>
+          <span>The best HEN still trails the best flat baseline by about 1.04 percentage points, and the food branch remains one of the most persistent bottlenecks.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Main Result Matrix</h2>
+      <p>
+        The table below highlights the results that best represent the current project state. Parameter counts are unified
+        using currently instantiable models in the codebase. For classic multi-model HENs, total parameter counts are not
+        strictly normalized here, so accuracy remains the primary reference.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Track</th>
+            <th>Representative model</th>
+            <th>Parameters</th>
+            <th>Key metric</th>
+            <th>Takeaway</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Track">Flat Baseline</td>
+            <td data-label="Representative model">ConvNeXt-Tiny</td>
+            <td data-label="Parameters">27.84M</td>
+            <td data-label="Key metric">Leaf 96.89%</td>
+            <td data-label="Takeaway"><span class="tag good">Best overall result so far</span></td>
+          </tr>
+          <tr>
+            <td data-label="Track">Flat Baseline</td>
+            <td data-label="Representative model">ResNet18</td>
+            <td data-label="Parameters">11.19M</td>
+            <td data-label="Key metric">Leaf 94.96%</td>
+            <td data-label="Takeaway"><span class="tag accent">Mid-scale reference baseline</span></td>
+          </tr>
+          <tr>
+            <td data-label="Track">Classic HEN</td>
+            <td data-label="Representative model">2-level HEN</td>
+            <td data-label="Parameters">Multi-model pipeline</td>
+            <td data-label="Key metric">End-to-end leaf 95.85%</td>
+            <td data-label="Takeaway"><span class="tag good">Best HEN result so far</span></td>
+          </tr>
+          <tr>
+            <td data-label="Track">Classic HEN</td>
+            <td data-label="Representative model">3-level HEN improved</td>
+            <td data-label="Parameters">Multi-model pipeline</td>
+            <td data-label="Key metric">Top 99.26%, Mid-oracle 98.89%, Leaf 95.63%</td>
+            <td data-label="Takeaway"><span class="tag accent">Best 3-level HEN variant</span></td>
+          </tr>
+          <tr>
+            <td data-label="Track">Modular HEN</td>
+            <td data-label="Representative model">Modular HEN + ResNet18</td>
+            <td data-label="Parameters">12.78M</td>
+            <td data-label="Key metric">Leaf 94.67%</td>
+            <td data-label="Takeaway"><span class="tag warn">Modularity works, but accuracy still trails older HEN</span></td>
+          </tr>
+          <tr>
+            <td data-label="Track">Modular HEN</td>
+            <td data-label="Representative model">Prepared-food branch FT</td>
+            <td data-label="Parameters">12.78M total</td>
+            <td data-label="Key metric">Leaf 94.81%</td>
+            <td data-label="Takeaway"><span class="tag accent">Confirms local branch fine-tuning is useful</span></td>
+          </tr>
+          <tr>
+            <td data-label="Track">Coarse-to-Fine HEN</td>
+            <td data-label="Representative model">ShuffleNet top router</td>
+            <td data-label="Parameters">36.23M</td>
+            <td data-label="Key metric">Top 99.33%</td>
+            <td data-label="Takeaway"><span class="tag accent">Top-level routing is already strong enough</span></td>
+          </tr>
+          <tr>
+            <td data-label="Track">Coarse-to-Fine HEN</td>
+            <td data-label="Representative model">Best router stage</td>
+            <td data-label="Parameters">36.23M</td>
+            <td data-label="Key metric">Top 99.26%, Mid 97.41%</td>
+            <td data-label="Takeaway"><span class="tag accent">Food mid-level remains stuck at 95.78%</span></td>
+          </tr>
+          <tr>
+            <td data-label="Track">Coarse-to-Fine HEN</td>
+            <td data-label="Representative model">Full residual C2F</td>
+            <td data-label="Parameters">36.23M</td>
+            <td data-label="Key metric">Leaf 92.37%</td>
+            <td data-label="Takeaway"><span class="tag warn">Leaf layer still loses too much accuracy</span></td>
+          </tr>
+          <tr>
+            <td data-label="Track">Lightweight Flat</td>
+            <td data-label="Representative model">MobileNetV3-Small</td>
+            <td data-label="Parameters">1.55M</td>
+            <td data-label="Key metric">Leaf 94.52%</td>
+            <td data-label="Takeaway"><span class="tag accent">Current lightest usable flat result</span></td>
+          </tr>
+          <tr>
+            <td data-label="Track">Lightweight HEN</td>
+            <td data-label="Representative model">Joint HEN + MobileNetV3-Small</td>
+            <td data-label="Parameters">0.95M</td>
+            <td data-label="Key metric">Leaf 93.78%</td>
+            <td data-label="Takeaway"><span class="tag accent">Current lightest HEN result</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>Architecture Exploration Notes</h2>
+      <p>
+        Most of the new architecture work has focused on making HEN more integrated, more efficient,
+        and more compatible with incremental training. These ideas are engineering successes, but they have
+        not yet produced the strongest accuracy results.
+      </p>
+      <div class="note-list">
+        <article class="note">
+          <h3>Modular Shared-Trunk HEN</h3>
+          <ul>
+            <li>The training flow for a shared trunk plus detachable branches has been validated.</li>
+            <li>Local branch fine-tuning does not significantly damage parallel branches; prepared_food fine-tuning improved global leaf accuracy from 94.67% to 94.81%.</li>
+            <li>The main drawback is that overall accuracy still stays below the older HEN line.</li>
+          </ul>
+        </article>
+        <article class="note">
+          <h3>Coarse-to-Fine / Residual HEN</h3>
+          <ul>
+            <li>The direction of a light top router plus stronger downstream experts worked at the top level: the top router reached 99.33%.</li>
+            <li>The best mid stage reached 97.41%, but the full leaf model only reached 92.37%.</li>
+            <li>This suggests routing is already strong, while leaf-level capacity or training strategy is still insufficient.</li>
+          </ul>
+        </article>
+        <article class="note">
+          <h3>Food Branch Specialization</h3>
+          <ul>
+            <li>Several targeted ideas were tested for the food branch: higher-resolution mid input, conservative crop policy, shared-feature correction, and attention crop.</li>
+            <li>None of these raised food mid accuracy beyond 95.78%.</li>
+            <li>The attention crop mechanism was integrated successfully, but it did not deliver a measurable gain.</li>
+          </ul>
+        </article>
+        <article class="note">
+          <h3>Lightweight Search</h3>
+          <ul>
+            <li>MobileNetV3 and ShuffleNet backbones have been wired into the flat, joint HEN, and modular HEN code paths.</li>
+            <li>At the moment, the 1M-parameter scale is still not enough to hold the 95% line.</li>
+            <li>The next promising range is likely the 3M to 5M scale, for example MobileNetV3-Large or comparable backbones.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Current Assessment</h2>
+      <p>
+        If the goal is to maximize accuracy, the most stable story remains: classic HEN works, but the best flat baseline
+        is still stronger. If the goal is to build a more engineering-friendly, incrementally trainable hierarchical model,
+        modular HEN and joint HEN already provide credible prototypes, but they have not yet achieved the best trade-off
+        between accuracy and efficiency.
+      </p>
+      <div class="status-strip">
+        <div class="pill-card">
+          <strong>Most stable conclusion</strong>
+          <span>Hierarchical structure is useful, but the best HEN is still about 1.04 percentage points below the best flat baseline.</span>
+        </div>
+        <div class="pill-card">
+          <strong>Most solid engineering result</strong>
+          <span>Modular incremental training has been validated and supports a shared trunk with localized branch updates.</span>
+        </div>
+        <div class="pill-card">
+          <strong>Most likely next step</strong>
+          <span>Push lightweight search into the 3M to 5M range, or return to the classic HEN line with stronger leaf experts.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Incomplete or Ongoing Items</h2>
+      <p>
+        The following items do not yet support a final conclusion and should still be labeled as in progress in any external presentation.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Status</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Item">Flat MobileNetV3-Large (old recipe)</td>
+            <td data-label="Status">Ran to 11 epochs, peaked at 93.04%</td>
+            <td data-label="Note">The training recipe was not appropriate for mobile models, so this should not be treated as a final result.</td>
+          </tr>
+          <tr>
+            <td data-label="Item">Flat MobileNetV3-Large (AdamW recipe)</td>
+            <td data-label="Status">Interrupted after 2 epochs</td>
+            <td data-label="Note">Current best is only 92.59%, so it is far too early to conclude anything.</td>
+          </tr>
+          <tr>
+            <td data-label="Item">Larger lightweight HEN backbones</td>
+            <td data-label="Status">Not completed</td>
+            <td data-label="Note">Joint HEN has only been run with MobileNetV3-Small; Large and ShuffleNet variants have not yet produced a meaningful comparison.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>Key Result Files</h2>
+      <p>These are the main artifacts referenced in this report.</p>
+      <div class="paths">
+        <div class="path">D:\school\Neural\HEN\outputs\hen_eval_summary_food.json</div>
+        <div class="path">D:\school\Neural\HEN\outputs\hen_eval_summary_food_3level_feline_aircraft_improved.json</div>
+        <div class="path">D:\school\Neural\HEN\outputs\flat27_convnext_tiny_run1\summary.json</div>
+        <div class="path">D:\school\Neural\HEN\outputs\flat27_resnet18_sam_run1\summary.json</div>
+        <div class="path">D:\school\Neural\HEN\outputs\modular_hen_full_resnet18_ft1_20260404\eval_summary.json</div>
+        <div class="path">D:\school\Neural\HEN\outputs\modular_hen_prepared_food_branch_ft4_20260404\eval_summary.json</div>
+        <div class="path">D:\school\Neural\HEN\outputs\c2f_hen_top_router_shufflenetx10_r128_resnet18_20260404\summary.json</div>
+        <div class="path">D:\school\Neural\HEN\outputs\c2f_hen_router_from_top_shufflenetx10_r128_midres_resnet18_20260404\eval_summary.json</div>
+        <div class="path">D:\school\Neural\HEN\outputs\c2f_hen_full_shufflenetx10_r128_residual_ft1_resnet18_20260404\summary.json</div>
+        <div class="path">D:\school\Neural\HEN\outputs\c2f_hen_router_from_mid_midattn_food192_resnet18_20260404\eval_summary.json</div>
+        <div class="path">D:\school\Neural\HEN\outputs\flat27_mobilenet_v3_small_run1_20260405\summary.json</div>
+        <div class="path">D:\school\Neural\HEN\outputs\joint_hen_mobilenet_v3_small_run1_20260405\summary.json</div>
+      </div>
+      <div class="footer">
+        Report generated on 2026-04-16. The content is based only on experiment results currently available in the repository and excludes unfinished or non-persisted training runs.
+      </div>
+    </section>
+  </main>
+</body>
+</html>

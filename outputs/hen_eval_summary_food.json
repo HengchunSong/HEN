@@ -1,0 +1,23 @@
+{
+  "total_samples": 1350,
+  "router_acc": 0.9925925925925926,
+  "expert_oracle_acc": 0.9629629629629629,
+  "end_to_end_leaf_acc": 0.9585185185185185,
+  "per_group": {
+    "animal": {
+      "samples": 450,
+      "oracle_acc": 0.9666666666666667,
+      "end_to_end_acc": 0.9622222222222222
+    },
+    "vehicle": {
+      "samples": 450,
+      "oracle_acc": 0.9666666666666667,
+      "end_to_end_acc": 0.9644444444444444
+    },
+    "food": {
+      "samples": 450,
+      "oracle_acc": 0.9555555555555556,
+      "end_to_end_acc": 0.9488888888888889
+    }
+  }
+}
