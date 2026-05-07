@@ -4,6 +4,7 @@ Hierarchical Expert Networks experiments on a balanced 27-class ImageNet subset 
 
 ## Open the report
 
+- Run in Colab: [HEN Colab notebook](https://colab.research.google.com/github/HengchunSong/HEN/blob/main/colab/HEN_Colab.ipynb)
 - Rendered HTML report: [Flat CNN vs HEN Comparative Report](https://raw.githack.com/HengchunSong/HEN/main/outputs/flat_vs_hen_report_20260501_en.html)
 - Report source file: [outputs/flat_vs_hen_report_20260501_en.html](https://github.com/HengchunSong/HEN/blob/main/outputs/flat_vs_hen_report_20260501_en.html)
 
@@ -18,4 +19,3 @@ Hierarchical Expert Networks experiments on a balanced 27-class ImageNet subset 
 
 - Best flat accuracy: `96.89%` with `ConvNeXt-Tiny`
 - Best 95%+ efficiency result: `95.63%` with `Joint HEN + MobileNetV3-Large`
-
