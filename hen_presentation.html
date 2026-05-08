@@ -188,13 +188,47 @@
     display: block;
   }
   .arch-caption {
-    display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    display: block;
     border-top: 1px solid var(--border);
     padding: .9rem 1rem;
     color: var(--muted);
     font-size: .86rem;
   }
   .arch-caption strong { color: var(--text); }
+  .arch-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .65rem;
+    padding: 0 1rem 1rem;
+  }
+  .arch-metric-card {
+    background: rgba(108,143,255,.06);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: .75rem .85rem;
+  }
+  .arch-metric-card span {
+    display: block;
+    color: var(--muted);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .arch-metric-card strong {
+    display: block;
+    color: var(--text);
+    font-size: .95rem;
+    line-height: 1.35;
+    margin-top: .18rem;
+  }
+  .arch-note {
+    color: var(--muted);
+    font-size: .74rem;
+    line-height: 1.55;
+    padding: 0 1rem 1rem;
+    margin-top: -.25rem;
+  }
   .flow-line {
     stroke-dasharray: 9 7;
     animation: flow 1.2s linear infinite;
@@ -246,7 +280,13 @@
   .bar-compact { background: linear-gradient(90deg, var(--green), #10b981); }
   .bar-flat { background: linear-gradient(90deg, var(--yellow), #f59e0b); }
   .bar-classic { background: linear-gradient(90deg, var(--red), #ef4444); }
-  .res-val { font-size: 0.82rem; color: var(--muted); width: 70px; text-align: right; flex-shrink: 0; }
+  .res-val { font-size: 0.82rem; color: var(--muted); width: 105px; text-align: right; flex-shrink: 0; }
+  .res-note {
+    color: var(--muted);
+    font-size: .78rem;
+    line-height: 1.6;
+    margin-top: .35rem;
+  }
 
   /* AMBIGUITY */
   .ambiguity-box {
@@ -320,6 +360,7 @@
     nav .logo { margin-right: 1rem; }
     section { padding: 3.5rem 1.25rem; }
     .hero { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .arch-metrics { grid-template-columns: 1fr; }
     .res-row {
       display: grid;
       grid-template-columns: 1fr;
@@ -334,11 +375,11 @@
 <nav>
   <span class="logo">Flat CNN vs HEN</span>
   <a href="#thesis">Thesis</a>
+  <a href="#ambiguity">Why 95%</a>
   <a href="#architecture">Architecture</a>
   <a href="#journey">Journey</a>
   <a href="#difficulties">Difficulties</a>
   <a href="#resources">Resources</a>
-  <a href="#ambiguity">Ambiguity</a>
 </nav>
 
 <!-- HERO -->
@@ -395,6 +436,29 @@
 
 <hr class="divider"/>
 
+<!-- AMBIGUITY -->
+<section id="ambiguity">
+  <div class="section-label">Why 95%</div>
+  <h2>Why the target is 95%, not perfection</h2>
+  <p>Before comparing architecture efficiency, the evaluation needs a practical target. Some validation images mix multiple strong subjects: a bird with fruit, food beside a dominant object, or produce in a market scene. These can be visually reasonable for a human, yet still be counted wrong by the label protocol.</p>
+  <div class="ambiguity-box">
+    <div class="ambiguity-note">
+      Some errors reflect <strong>task ambiguity</strong> as much as model weakness. Beyond 95%, the model is increasingly competing with label noise, mixed-object scenes, and annotation edge cases.
+    </div>
+    <p style="color:var(--muted); font-size:.9rem; line-height:1.7">That is why this report treats <strong style="color:var(--text)">95%</strong> as the useful engineering line: high enough to prove the architecture works, but not so high that the comparison is dominated by unclear labels.</p>
+    <div class="failure-grid" id="failureGrid">
+      <div class="failure-card">
+        <div>
+          <strong>Loading failure examples</strong>
+          <span>The examples are embedded from the detailed report when the page is served from GitHub or a local server.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
 <!-- ARCHITECTURE -->
 <section id="architecture">
   <div class="section-label">Architecture</div>
@@ -436,6 +500,7 @@
     <div class="arch-controls" aria-label="Architecture diagram controls">
       <button class="arch-btn active" type="button" data-arch="flat">Flat CNN</button>
       <button class="arch-btn" type="button" data-arch="classic">Classic HEN</button>
+      <button class="arch-btn" type="button" data-arch="c2f">Coarse-to-Fine</button>
       <button class="arch-btn" type="button" data-arch="joint">Compact Joint HEN</button>
       <button class="arch-btn" type="button" data-arch="delta">Common-Delta</button>
     </div>
@@ -443,8 +508,9 @@
       <div id="archViz" aria-live="polite"></div>
       <div class="arch-caption">
         <span id="archCaption"><strong>Flat CNN:</strong> one full backbone, one 27-way classifier.</span>
-        <span id="archMetric">96.89% peak accuracy</span>
       </div>
+      <div class="arch-metrics" id="archMetrics"></div>
+      <p class="arch-note">*Estimated or backbone-only compute for exploratory branches; final verified comparisons are Flat ConvNeXt-Tiny, Classic 3-Level HEN, and Compact Joint HEN.</p>
     </div>
   </div>
 </section>
@@ -552,6 +618,11 @@
     <div class="res-group">
       <h3>Parameters (M)</h3>
       <div class="res-row">
+        <span class="res-label">Common-Delta HEN</span>
+        <div class="res-bar-wrap"><div class="res-bar bar-compact" style="width:1.2%"></div></div>
+        <span class="res-val">1.74M</span>
+      </div>
+      <div class="res-row">
         <span class="res-label">Compact Joint HEN</span>
         <div class="res-bar-wrap"><div class="res-bar bar-compact" style="width:2.1%"></div></div>
         <span class="res-val">3.01M</span>
@@ -562,6 +633,11 @@
         <span class="res-val">27.84M</span>
       </div>
       <div class="res-row">
+        <span class="res-label">Coarse-to-Fine HEN</span>
+        <div class="res-bar-wrap"><div class="res-bar bar-flat" style="width:24.9%"></div></div>
+        <span class="res-val">36.23M</span>
+      </div>
+      <div class="res-row">
         <span class="res-label">Classic 3-Level HEN</span>
         <div class="res-bar-wrap"><div class="res-bar bar-classic" style="width:100%"></div></div>
         <span class="res-val">145.31M</span>
@@ -570,9 +646,19 @@
     <div class="res-group">
       <h3>Compute (GFLOPs)</h3>
       <div class="res-row">
+        <span class="res-label">Common-Delta HEN</span>
+        <div class="res-bar-wrap"><div class="res-bar bar-compact" style="width:1%"></div></div>
+        <span class="res-val">0.057*</span>
+      </div>
+      <div class="res-row">
         <span class="res-label">Compact Joint HEN</span>
         <div class="res-bar-wrap"><div class="res-bar bar-compact" style="width:4%"></div></div>
         <span class="res-val">0.217</span>
+      </div>
+      <div class="res-row">
+        <span class="res-label">Coarse-to-Fine HEN</span>
+        <div class="res-bar-wrap"><div class="res-bar bar-flat" style="width:11.8%"></div></div>
+        <span class="res-val">~0.64*</span>
       </div>
       <div class="res-row">
         <span class="res-label">Flat ConvNeXt-Tiny</span>
@@ -584,29 +670,7 @@
         <div class="res-bar-wrap"><div class="res-bar bar-classic" style="width:100%"></div></div>
         <span class="res-val">5.442</span>
       </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider"/>
-
-<!-- AMBIGUITY -->
-<section id="ambiguity">
-  <div class="section-label">Ambiguity</div>
-  <h2>Why the last few points are hard</h2>
-  <p>Some validation images mix multiple strong subjects—a bird with fruit, food beside a dominant object, or produce in a market scene. These can be reasonable for a human annotator yet still be counted wrong by the label protocol.</p>
-  <div class="ambiguity-box">
-    <div class="ambiguity-note">
-      Some errors reflect <strong>task ambiguity</strong> as much as model weakness. Beyond 95%, you're competing with label noise and annotation edge cases as much as with architecture choices.
-    </div>
-    <p style="color:var(--muted); font-size:.9rem; line-height:1.7">This is why the report treats <strong style="color:var(--text)">95%</strong> as a practical target. The final judgment is not purely model-vs-model—it is also a question of what the labels actually encode.</p>
-    <div class="failure-grid" id="failureGrid">
-      <div class="failure-card">
-        <div>
-          <strong>Loading failure examples</strong>
-          <span>The examples are embedded from the detailed report when the page is served from GitHub or a local server.</span>
-        </div>
-      </div>
+      <p class="res-note">*Common-Delta is backbone-dominated. Coarse-to-Fine compute is an active-path estimate from its 128px router plus one 128px ResNet18-style expert path; it did not reach the 95% target.</p>
     </div>
   </div>
 </section>
@@ -639,7 +703,11 @@
 const diagrams = {
   flat: {
     caption: "<strong>Flat CNN:</strong> one full backbone, one 27-way classifier.",
-    metric: "96.89% peak accuracy",
+    metrics: [
+      ["Accuracy", "96.89%"],
+      ["Parameters", "27.84M"],
+      ["Compute", "4.456 GFLOPs"]
+    ],
     svg: `
       <svg viewBox="0 0 760 280" role="img" aria-label="Flat CNN diagram">
         <defs><marker id="arrow-flat" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6c8fff"/></marker></defs>
@@ -658,7 +726,11 @@ const diagrams = {
   },
   classic: {
     caption: "<strong>Classic 3-Level HEN:</strong> explicit routers and experts, but many stored backbones.",
-    metric: "95.63%, 145.31M stored params",
+    metrics: [
+      ["Accuracy", "95.63%"],
+      ["Parameters", "145.31M total / 33.53M active"],
+      ["Compute", "5.442 GFLOPs active"]
+    ],
     svg: `
       <svg viewBox="0 0 760 280" role="img" aria-label="Classic HEN diagram">
         <defs><marker id="arrow-classic" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6c8fff"/></marker></defs>
@@ -686,9 +758,44 @@ const diagrams = {
         <line class="flow-line" x1="492" y1="140" x2="595" y2="140" stroke="#6c8fff" stroke-width="4" marker-end="url(#arrow-classic)"/>
       </svg>`
   },
+  c2f: {
+    caption: "<strong>Coarse-to-Fine HEN:</strong> a tiny top router sends samples into stronger downstream experts.",
+    metrics: [
+      ["Accuracy", "92.37%"],
+      ["Parameters", "36.23M"],
+      ["Compute", "~0.64 GFLOPs active path*"]
+    ],
+    svg: `
+      <svg viewBox="0 0 760 280" role="img" aria-label="Coarse-to-fine HEN diagram">
+        <defs><marker id="arrow-c2f" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker></defs>
+        <rect x="36" y="110" width="92" height="60" rx="10" fill="#151820" stroke="#252a3a"/>
+        <text x="82" y="146" text-anchor="middle" font-size="16" font-weight="700" fill="#e2e8f0">Input</text>
+        <rect class="node-pulse" x="178" y="102" width="120" height="76" rx="10" fill="#1c2030" stroke="#fbbf24" stroke-width="2"/>
+        <text x="238" y="132" text-anchor="middle" font-size="17" font-weight="800" fill="#e2e8f0">Tiny Router</text>
+        <text x="238" y="156" text-anchor="middle" font-size="12" fill="#8892a4">64x64 top</text>
+        <rect x="385" y="32" width="132" height="50" rx="9" fill="#151820" stroke="#252a3a"/>
+        <rect class="node-pulse" x="385" y="115" width="132" height="50" rx="9" fill="#1c2030" stroke="#fbbf24" stroke-width="2"/>
+        <rect x="385" y="198" width="132" height="50" rx="9" fill="#151820" stroke="#252a3a"/>
+        <text x="451" y="62" text-anchor="middle" font-size="13" fill="#8892a4">animal expert</text>
+        <text x="451" y="145" text-anchor="middle" font-size="13" font-weight="800" fill="#e2e8f0">food expert</text>
+        <text x="451" y="228" text-anchor="middle" font-size="13" fill="#8892a4">vehicle expert</text>
+        <rect x="610" y="108" width="112" height="64" rx="10" fill="#151820" stroke="#34d399" stroke-width="2"/>
+        <text x="666" y="134" text-anchor="middle" font-size="14" font-weight="800" fill="#e2e8f0">Leaf</text>
+        <text x="666" y="155" text-anchor="middle" font-size="12" fill="#8892a4">fine classes</text>
+        <line class="flow-line" x1="128" y1="140" x2="178" y2="140" stroke="#fbbf24" stroke-width="4" marker-end="url(#arrow-c2f)"/>
+        <line x1="298" y1="140" x2="385" y2="57" stroke="#252a3a" stroke-width="2"/>
+        <line class="flow-line" x1="298" y1="140" x2="385" y2="140" stroke="#fbbf24" stroke-width="4" marker-end="url(#arrow-c2f)"/>
+        <line x1="298" y1="140" x2="385" y2="223" stroke="#252a3a" stroke-width="2"/>
+        <line class="flow-line" x1="517" y1="140" x2="610" y2="140" stroke="#fbbf24" stroke-width="4" marker-end="url(#arrow-c2f)"/>
+      </svg>`
+  },
   joint: {
     caption: "<strong>Compact Joint HEN:</strong> one shared backbone with top, mid, and leaf supervision.",
-    metric: "95.63%, 3.01M params",
+    metrics: [
+      ["Accuracy", "95.63%"],
+      ["Parameters", "3.01M"],
+      ["Compute", "0.217 GFLOPs"]
+    ],
     svg: `
       <svg viewBox="0 0 760 280" role="img" aria-label="Compact Joint HEN diagram">
         <defs><marker id="arrow-joint" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#34d399"/></marker></defs>
@@ -711,7 +818,11 @@ const diagrams = {
   },
   delta: {
     caption: "<strong>Common-Delta:</strong> hard branches receive parent-specific common and difference features.",
-    metric: "local gains, not final winner",
+    metrics: [
+      ["Accuracy", "93.78%"],
+      ["Parameters", "1.74M total / 0.79M branch-trained"],
+      ["Compute", "0.057 GFLOPs backbone*"]
+    ],
     svg: `
       <svg viewBox="0 0 760 280" role="img" aria-label="Common-delta diagram">
         <defs><marker id="arrow-delta" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#a78bfa"/></marker></defs>
@@ -746,7 +857,12 @@ function renderDiagram(key) {
   const item = diagrams[key];
   document.getElementById("archViz").innerHTML = item.svg;
   document.getElementById("archCaption").innerHTML = item.caption;
-  document.getElementById("archMetric").textContent = item.metric;
+  document.getElementById("archMetrics").innerHTML = item.metrics.map(([label, value]) => `
+    <div class="arch-metric-card">
+      <span>${label}</span>
+      <strong>${value}</strong>
+    </div>
+  `).join("");
   document.querySelectorAll(".arch-btn").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.arch === key);
   });
