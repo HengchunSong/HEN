@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HEN Presentation</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --ink: #17191f;
+      --muted: #5f6572;
+      --line: #d9dee8;
+      --panel: #ffffff;
+      --teal: #087f73;
+      --teal-soft: #dff4f1;
+      --blue: #315fb8;
+      --blue-soft: #e2ebff;
+      --amber: #a96400;
+      --amber-soft: #fff0d6;
+      --red: #b23a48;
+      --red-soft: #ffe1e6;
+      --green: #216e3a;
+      --green-soft: #def2e4;
+      --shadow: 0 20px 45px rgba(28, 35, 48, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(90deg, rgba(49, 95, 184, 0.08) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(8, 127, 115, 0.06) 1px, transparent 1px),
+        var(--bg);
+      background-size: 44px 44px;
+      color: var(--ink);
+      font-family: "Aptos", "Segoe UI", Arial, sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: var(--blue); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+
+    .deck-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px max(18px, calc((100vw - 1180px) / 2));
+      background: rgba(247, 248, 251, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 850;
+      color: var(--ink);
+    }
+
+    .brand-mark {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.45);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover { background: #ffffff; color: var(--ink); }
+
+    .slide {
+      min-height: 92vh;
+      padding: 78px max(18px, calc((100vw - 1180px) / 2));
+      display: grid;
+      align-content: center;
+      gap: 28px;
+      border-bottom: 1px solid rgba(217, 222, 232, 0.7);
+    }
+
+    .slide.compact { min-height: auto; }
+
+    .hero {
+      grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #ffffff;
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      letter-spacing: 0;
+      line-height: 1.08;
+    }
+
+    h1 {
+      max-width: 11ch;
+      font-size: clamp(48px, 8vw, 104px);
+      font-weight: 900;
+    }
+
+    h2 {
+      font-size: clamp(34px, 5vw, 66px);
+      font-weight: 900;
+      max-width: 12ch;
+    }
+
+    h3 {
+      font-size: 22px;
+      font-weight: 850;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(17px, 2.2vw, 22px);
+    }
+
+    .hero-copy {
+      display: grid;
+      gap: 22px;
+    }
+
+    .hero-panel,
+    .panel,
+    .metric-card,
+    .story-card,
+    .finding,
+    .image-tile {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-panel {
+      padding: 26px;
+      border-radius: 8px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .big-number {
+      font-size: clamp(54px, 8vw, 88px);
+      line-height: 0.95;
+      font-weight: 950;
+      color: var(--teal);
+    }
+
+    .hero-panel p { margin: 0; color: var(--muted); }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .metric-card {
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .metric-card strong {
+      display: block;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .metric-card span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .metric-card.good strong { color: var(--green); }
+    .metric-card.warn strong { color: var(--amber); }
+    .metric-card.blue strong { color: var(--blue); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(380px, 1.08fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .panel p { margin: 10px 0 0; color: var(--muted); }
+
+    .architecture {
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .arch-tabs {
+      display: grid;
+      gap: 8px;
+    }
+
+    .arch-tab {
+      width: 100%;
+      min-height: 54px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #ffffff;
+      color: var(--muted);
+      font: inherit;
+      font-weight: 800;
+      text-align: left;
+      padding: 10px 12px;
+      cursor: pointer;
+    }
+
+    .arch-tab:hover,
+    .arch-tab.active {
+      color: var(--ink);
+      border-color: var(--teal);
+      background: var(--teal-soft);
+    }
+
+    .arch-stage {
+      min-height: 440px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .arch-copy {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .arch-title {
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .arch-detail {
+      color: var(--muted);
+      margin: 4px 0 0;
+      font-size: 14px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 850;
+      background: var(--blue-soft);
+      color: var(--blue);
+      white-space: nowrap;
+    }
+
+    .svg-wrap {
+      width: 100%;
+      min-height: 315px;
+    }
+
+    .flow-line {
+      stroke-dasharray: 10 8;
+      animation: dash 1.4s linear infinite;
+    }
+
+    @keyframes dash {
+      to { stroke-dashoffset: -36; }
+    }
+
+    .pulse {
+      animation: pulse 1.7s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.75; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.035); }
+    }
+
+    .journey {
+      display: grid;
+      gap: 14px;
+      position: relative;
+    }
+
+    .journey::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 16px;
+      bottom: 16px;
+      width: 3px;
+      background: linear-gradient(var(--blue), var(--teal), var(--green));
+    }
+
+    .story-card {
+      position: relative;
+      margin-left: 50px;
+      border-radius: 8px;
+      padding: 18px 18px 16px;
+    }
+
+    .story-card::before {
+      content: "";
+      position: absolute;
+      left: -41px;
+      top: 24px;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: var(--panel);
+      border: 4px solid var(--teal);
+    }
+
+    .story-card h3 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 20px;
+    }
+
+    .story-card p { margin: 10px 0 0; color: var(--muted); }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 850;
+      color: var(--teal);
+      background: var(--teal-soft);
+      white-space: nowrap;
+    }
+
+    .findings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .finding {
+      border-radius: 8px;
+      padding: 18px;
+      border-top: 6px solid var(--blue);
+    }
+
+    .finding:nth-child(2) { border-top-color: var(--amber); }
+    .finding:nth-child(3) { border-top-color: var(--red); }
+    .finding:nth-child(4) { border-top-color: var(--teal); }
+    .finding:nth-child(5) { border-top-color: var(--green); }
+    .finding:nth-child(6) { border-top-color: var(--blue); }
+
+    .finding p { margin: 10px 0 0; color: var(--muted); }
+
+    .resource-chart {
+      display: grid;
+      gap: 18px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr) 112px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .bar-label { font-weight: 850; }
+
+    .bar-track {
+      height: 28px;
+      border-radius: 6px;
+      background: #eef2f7;
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: var(--w);
+      background: var(--blue);
+    }
+
+    .bar-fill.hen { background: var(--teal); }
+    .bar-fill.classic { background: var(--amber); }
+
+    .bar-value {
+      color: var(--muted);
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .image-tile {
+      border-radius: 8px;
+      overflow: hidden;
+      min-height: 260px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+
+    .image-tile img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+      background: #e8edf4;
+    }
+
+    .image-tile div {
+      padding: 12px;
+    }
+
+    .image-tile strong { display: block; }
+    .image-tile span { display: block; color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+    .quote {
+      max-width: 850px;
+      font-size: clamp(24px, 4vw, 48px);
+      font-weight: 900;
+      line-height: 1.12;
+    }
+
+    .callout {
+      padding: 18px;
+      border-left: 6px solid var(--green);
+      background: var(--green-soft);
+      color: #183d25;
+      border-radius: 0 8px 8px 0;
+      max-width: 880px;
+    }
+
+    .footer {
+      padding: 36px max(18px, calc((100vw - 1180px) / 2));
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .deck-nav { align-items: flex-start; flex-direction: column; }
+      .nav-links { justify-content: flex-start; }
+      .hero, .two-col, .architecture { grid-template-columns: 1fr; }
+      .metric-grid, .findings-grid, .image-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .slide { min-height: auto; padding-top: 54px; padding-bottom: 54px; }
+    }
+
+    @media (max-width: 640px) {
+      .metric-grid, .findings-grid, .image-grid { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 1fr; }
+      .bar-value { text-align: left; }
+      .story-card h3 { display: block; }
+      .tag { margin-top: 8px; }
+      .arch-copy { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="deck-nav" aria-label="Presentation sections">
+    <div class="brand"><span class="brand-mark"></span> HEN Presentation</div>
+    <div class="nav-links">
+      <a href="#thesis">Thesis</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#journey">Journey</a>
+      <a href="#difficulties">Difficulties</a>
+      <a href="#resources">Resources</a>
+      <a href="#failures">Ambiguity</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="slide hero" id="thesis">
+      <div class="hero-copy">
+        <span class="eyebrow">Flat CNN vs HEN</span>
+        <h1>Finding the cheapest path to 95%</h1>
+        <p class="lead">
+          The project started with a simple question: can a hierarchical expert network beat a flat classifier on resource efficiency, while keeping accuracy high enough to matter?
+        </p>
+      </div>
+      <aside class="hero-panel">
+        <div class="big-number">95.63%</div>
+        <p>
+          The compact Joint HEN with MobileNetV3-Large reached the same accuracy band as the classic 3-level HEN, but with a radically smaller parameter budget.
+        </p>
+        <div class="metric-grid">
+          <div class="metric-card good"><strong>3.01M</strong><span>compact HEN parameters</span></div>
+          <div class="metric-card blue"><strong>27.84M</strong><span>flat ConvNeXt-Tiny parameters</span></div>
+          <div class="metric-card warn"><strong>145.31M</strong><span>classic 3-level HEN storage</span></div>
+          <div class="metric-card good"><strong>0.217</strong><span>compact HEN GFLOPs</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="slide compact" id="architecture">
+      <div class="two-col">
+        <div>
+          <h2>Architecture evolution</h2>
+          <p class="lead">
+            The most important shift was not adding more heads. It was learning where the model should share representation and where it should specialize.
+          </p>
+          <div class="callout">
+            Use the buttons to switch the diagram. Animated lines show the active computation path, while pale blocks indicate stored or inactive capacity.
+          </div>
+        </div>
+        <div class="panel architecture">
+          <div class="arch-tabs" role="tablist" aria-label="Architecture choices">
+            <button class="arch-tab active" data-arch="flat" type="button">Flat CNN</button>
+            <button class="arch-tab" data-arch="classic" type="button">Classic 3-Level HEN</button>
+            <button class="arch-tab" data-arch="c2f" type="button">Coarse-to-Fine HEN</button>
+            <button class="arch-tab" data-arch="joint" type="button">Compact Joint HEN</button>
+            <button class="arch-tab" data-arch="delta" type="button">Common-Delta Branches</button>
+          </div>
+          <div class="arch-stage" aria-live="polite">
+            <div class="arch-copy">
+              <div>
+                <div class="arch-title" id="arch-title">Flat CNN</div>
+                <p class="arch-detail" id="arch-detail">One full feature extractor feeds one 27-way classifier. Strong and simple, but no built-in hierarchy or modular update path.</p>
+              </div>
+              <span class="badge" id="arch-badge">96.89% peak</span>
+            </div>
+            <div class="svg-wrap" id="arch-svg"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide compact" id="journey">
+      <h2>The path we took</h2>
+      <p class="lead">
+        The final result came from a sequence of very practical disappointments. Each one removed a tempting explanation and made the next design sharper.
+      </p>
+      <div class="journey">
+        <article class="story-card">
+          <h3>1. Classic HEN worked, but it was too heavy <span class="tag">95.63%</span></h3>
+          <p>
+            The original 3-level HEN proved that the hierarchy made sense. The cost was brutal: many full backbones were stored for routers and experts. It was modular, but not economical.
+          </p>
+        </article>
+        <article class="story-card">
+          <h3>2. Shared-backbone modular HEN saved parameters <span class="tag">94.67%</span></h3>
+          <p>
+            Sharing the feature extractor solved the storage problem, but the branch heads became too small relative to the backbone. It preserved modularity, yet the leaf experts were not expert enough.
+          </p>
+        </article>
+        <article class="story-card">
+          <h3>3. Coarse-to-fine looked natural, then exposed the bottleneck <span class="tag">92.37%</span></h3>
+          <p>
+            A light router plus stronger downstream experts matched the intuition that top-level decisions need less detail. Top routing reached 99%+, but the leaf layer could not recover enough accuracy.
+          </p>
+        </article>
+        <article class="story-card">
+          <h3>4. Food mid-level errors resisted obvious fixes <span class="tag">95.78% food mid</span></h3>
+          <p>
+            Higher resolution, wider mid heads, conservative crops, and attention crops all failed to move the food branch. That suggested the remaining errors were partly semantic and data-driven.
+          </p>
+        </article>
+        <article class="story-card">
+          <h3>5. Compact Joint HEN crossed the line <span class="tag">95.63%</span></h3>
+          <p>
+            The best practical answer was a shared MobileNetV3-Large feature extractor with hierarchical probability heads. It kept the hierarchy, removed most duplicate compute, and crossed 95%.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide compact" id="difficulties">
+      <h2>Difficulties and fixes</h2>
+      <p class="lead">
+        The useful part of the project is not just the final model. It is also the map of what failed, because those failures explain why the final architecture is shaped the way it is.
+      </p>
+      <div class="findings-grid">
+        <article class="finding">
+          <h3>Hard routing was brittle</h3>
+          <p>Argmax routing meant an early mistake was unrecoverable. The joint model softened this by supervising all levels from the same shared feature representation.</p>
+        </article>
+        <article class="finding">
+          <h3>Classic modularity was expensive</h3>
+          <p>Independent routers and leaf experts duplicated whole CNN backbones. The compact HEN moved most capacity into one shared feature extractor.</p>
+        </article>
+        <article class="finding">
+          <h3>Leaf experts needed real signal</h3>
+          <p>Making branch heads tiny saved parameters, but underfit the hardest sibling classes. MobileNetV3-Large gave enough feature quality without returning to huge storage cost.</p>
+        </article>
+        <article class="finding">
+          <h3>Food was not fixed by resolution</h3>
+          <p>Food mid-level accuracy did not improve from 192px input, 512 hidden dimensions, or conservative crop settings. More pixels were not the missing ingredient.</p>
+        </article>
+        <article class="finding">
+          <h3>Attention crop was too weak</h3>
+          <p>Rule-based heatmap crops found salient regions, but not necessarily the labeled object. The ambiguity was often about which object should count.</p>
+        </article>
+        <article class="finding">
+          <h3>Common-delta helped locally</h3>
+          <p>Common versus difference features improved some hard branches such as aircraft and prepared_food, but did not beat the simpler compact joint model overall.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide compact" id="resources">
+      <div class="two-col">
+        <div>
+          <h2>Resource story</h2>
+          <p class="lead">
+            At the 95% threshold, the comparison changes. Flat ConvNeXt-Tiny still wins on peak accuracy, but compact HEN wins on verified resource efficiency.
+          </p>
+          <div class="panel">
+            <h3>Final comparison</h3>
+            <p>
+              Flat ConvNeXt-Tiny reached 96.89% with 27.84M parameters and 4.456 GFLOPs. Compact Joint HEN reached 95.63% with 3.01M parameters and about 0.217 GFLOPs.
+            </p>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Parameters</h3>
+          <div class="resource-chart" aria-label="Parameter comparison">
+            <div class="bar-row">
+              <div class="bar-label">Compact Joint HEN</div>
+              <div class="bar-track"><div class="bar-fill hen" style="--w:2.1%"></div></div>
+              <div class="bar-value">3.01M</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Flat ConvNeXt-Tiny</div>
+              <div class="bar-track"><div class="bar-fill" style="--w:19.2%"></div></div>
+              <div class="bar-value">27.84M</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Classic 3-Level HEN</div>
+              <div class="bar-track"><div class="bar-fill classic" style="--w:100%"></div></div>
+              <div class="bar-value">145.31M</div>
+            </div>
+          </div>
+          <h3 style="margin-top:28px;">Compute</h3>
+          <div class="resource-chart" aria-label="Compute comparison">
+            <div class="bar-row">
+              <div class="bar-label">Compact Joint HEN</div>
+              <div class="bar-track"><div class="bar-fill hen" style="--w:4.0%"></div></div>
+              <div class="bar-value">0.217</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Flat ConvNeXt-Tiny</div>
+              <div class="bar-track"><div class="bar-fill" style="--w:81.9%"></div></div>
+              <div class="bar-value">4.456</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Classic 3-Level HEN</div>
+              <div class="bar-track"><div class="bar-fill classic" style="--w:100%"></div></div>
+              <div class="bar-value">5.442</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide compact" id="failures">
+      <h2>Why the last few points are hard</h2>
+      <p class="lead">
+        Some validation images mix multiple strong subjects. A bird with fruit, food beside another dominant object, or produce in a market scene can be reasonable for a human and still be counted wrong by the label protocol.
+      </p>
+      <div class="image-grid" id="failure-grid">
+        <article class="image-tile">
+          <div><strong>Loading examples</strong><span>Examples are pulled from the embedded images in the detailed report.</span></div>
+        </article>
+      </div>
+      <div class="callout">
+        This is why the report treats 95% as a practical target. Beyond that point, some errors reflect task ambiguity as much as model weakness.
+      </div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <h2>Final take</h2>
+        <p class="quote">
+          The hierarchy is worth keeping when it reduces resource cost without sacrificing the accuracy band that matters.
+        </p>
+        <p class="lead">
+          Flat CNN remains the strongest reference for peak accuracy. Compact Joint HEN is the stronger engineering answer for a verified 95%+ target under tight parameter and compute budgets.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Source report: <a href="flat_vs_hen_report_20260501_en.html">Flat CNN vs HEN Comparative Report</a>. Repository: <a href="https://github.com/HengchunSong/HEN">github.com/HengchunSong/HEN</a>.
+  </footer>
+
+  <script>
+    const svgTemplates = {
+      flat: {
+        title: "Flat CNN",
+        detail: "One full feature extractor feeds one 27-way classifier. Strong and simple, but no built-in hierarchy or modular update path.",
+        badge: "96.89% peak",
+        svg: `
+          <svg viewBox="0 0 780 330" role="img" aria-label="Flat CNN">
+            <defs><marker id="a-flat" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#087f73"/></marker></defs>
+            <rect x="40" y="120" width="120" height="86" rx="8" fill="#fff0d6" stroke="#a96400" stroke-width="3"/>
+            <text x="100" y="157" text-anchor="middle" font-size="22" font-weight="800" fill="#17191f">Input</text>
+            <text x="100" y="184" text-anchor="middle" font-size="15" fill="#5f6572">image</text>
+            <rect class="pulse" x="245" y="70" width="230" height="186" rx="8" fill="#e2ebff" stroke="#315fb8" stroke-width="3"/>
+            <text x="360" y="142" text-anchor="middle" font-size="28" font-weight="900" fill="#17191f">Backbone</text>
+            <text x="360" y="174" text-anchor="middle" font-size="16" fill="#5f6572">ConvNeXt / ResNet / MobileNet</text>
+            <rect x="585" y="120" width="140" height="86" rx="8" fill="#dff4f1" stroke="#087f73" stroke-width="3"/>
+            <text x="655" y="157" text-anchor="middle" font-size="22" font-weight="800" fill="#17191f">Head</text>
+            <text x="655" y="184" text-anchor="middle" font-size="15" fill="#5f6572">27 classes</text>
+            <line class="flow-line" x1="160" y1="163" x2="245" y2="163" stroke="#087f73" stroke-width="5" marker-end="url(#a-flat)"/>
+            <line class="flow-line" x1="475" y1="163" x2="585" y2="163" stroke="#087f73" stroke-width="5" marker-end="url(#a-flat)"/>
+          </svg>`
+      },
+      classic: {
+        title: "Classic 3-Level HEN",
+        detail: "Top router, mid router, and leaf experts are separate models. It is modular, but each layer duplicates heavy backbones.",
+        badge: "95.63%, 145.31M stored",
+        svg: `
+          <svg viewBox="0 0 780 330" role="img" aria-label="Classic 3-level HEN">
+            <defs><marker id="a-classic" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#087f73"/></marker></defs>
+            <rect x="34" y="139" width="92" height="64" rx="8" fill="#fff0d6" stroke="#a96400" stroke-width="3"/>
+            <text x="80" y="176" text-anchor="middle" font-size="19" font-weight="800">Input</text>
+            <rect class="pulse" x="176" y="126" width="116" height="90" rx="8" fill="#dff4f1" stroke="#087f73" stroke-width="3"/>
+            <text x="234" y="164" text-anchor="middle" font-size="21" font-weight="900">Top</text>
+            <text x="234" y="188" text-anchor="middle" font-size="14" fill="#5f6572">3-way router</text>
+            <rect x="362" y="38" width="128" height="54" rx="8" fill="#f3f5f8" stroke="#c2c9d5"/>
+            <rect class="pulse" x="362" y="138" width="128" height="54" rx="8" fill="#e2ebff" stroke="#315fb8" stroke-width="3"/>
+            <rect x="362" y="238" width="128" height="54" rx="8" fill="#f3f5f8" stroke="#c2c9d5"/>
+            <text x="426" y="70" text-anchor="middle" font-size="15" font-weight="800" fill="#5f6572">animal mid</text>
+            <text x="426" y="170" text-anchor="middle" font-size="15" font-weight="800">food mid</text>
+            <text x="426" y="270" text-anchor="middle" font-size="15" font-weight="800" fill="#5f6572">vehicle mid</text>
+            <rect x="585" y="38" width="136" height="54" rx="8" fill="#f3f5f8" stroke="#c2c9d5"/>
+            <rect class="pulse" x="585" y="138" width="136" height="54" rx="8" fill="#dff4f1" stroke="#087f73" stroke-width="3"/>
+            <rect x="585" y="238" width="136" height="54" rx="8" fill="#f3f5f8" stroke="#c2c9d5"/>
+            <text x="653" y="70" text-anchor="middle" font-size="15" font-weight="800" fill="#5f6572">leaf experts</text>
+            <text x="653" y="170" text-anchor="middle" font-size="15" font-weight="800">leaf experts</text>
+            <text x="653" y="270" text-anchor="middle" font-size="15" font-weight="800" fill="#5f6572">leaf experts</text>
+            <line class="flow-line" x1="126" y1="171" x2="176" y2="171" stroke="#087f73" stroke-width="5" marker-end="url(#a-classic)"/>
+            <line x1="292" y1="171" x2="362" y2="65" stroke="#c2c9d5" stroke-width="2"/>
+            <line class="flow-line" x1="292" y1="171" x2="362" y2="165" stroke="#087f73" stroke-width="5" marker-end="url(#a-classic)"/>
+            <line x1="292" y1="171" x2="362" y2="265" stroke="#c2c9d5" stroke-width="2"/>
+            <line class="flow-line" x1="490" y1="165" x2="585" y2="165" stroke="#087f73" stroke-width="5" marker-end="url(#a-classic)"/>
+          </svg>`
+      },
+      c2f: {
+        title: "Coarse-to-Fine HEN",
+        detail: "A light low-resolution router does top and mid decisions, then heavier branch towers handle leaf-level detail. The idea was right, but the leaf stage underperformed.",
+        badge: "top 99%+, leaf 92.37%",
+        svg: `
+          <svg viewBox="0 0 780 330" role="img" aria-label="Coarse-to-fine HEN">
+            <defs><marker id="a-c2f" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#087f73"/></marker></defs>
+            <rect x="34" y="132" width="96" height="76" rx="8" fill="#fff0d6" stroke="#a96400" stroke-width="3"/>
+            <text x="82" y="165" text-anchor="middle" font-size="18" font-weight="800">Input</text>
+            <text x="82" y="188" text-anchor="middle" font-size="13" fill="#5f6572">128 / 224</text>
+            <rect class="pulse" x="185" y="58" width="158" height="92" rx="8" fill="#dff4f1" stroke="#087f73" stroke-width="3"/>
+            <text x="264" y="94" text-anchor="middle" font-size="20" font-weight="900">Light router</text>
+            <text x="264" y="120" text-anchor="middle" font-size="14" fill="#5f6572">top + mid</text>
+            <rect x="185" y="198" width="158" height="72" rx="8" fill="#f3f5f8" stroke="#c2c9d5"/>
+            <text x="264" y="240" text-anchor="middle" font-size="16" font-weight="800" fill="#5f6572">shared stem</text>
+            <rect x="430" y="48" width="138" height="64" rx="8" fill="#f3f5f8" stroke="#c2c9d5"/>
+            <rect class="pulse" x="430" y="132" width="138" height="76" rx="8" fill="#e2ebff" stroke="#315fb8" stroke-width="3"/>
+            <rect x="430" y="228" width="138" height="64" rx="8" fill="#f3f5f8" stroke="#c2c9d5"/>
+            <text x="499" y="85" text-anchor="middle" font-size="15" font-weight="800" fill="#5f6572">animal tower</text>
+            <text x="499" y="164" text-anchor="middle" font-size="16" font-weight="900">food tower</text>
+            <text x="499" y="188" text-anchor="middle" font-size="13" fill="#5f6572">selected branch</text>
+            <text x="499" y="265" text-anchor="middle" font-size="15" font-weight="800" fill="#5f6572">vehicle tower</text>
+            <rect x="630" y="132" width="112" height="76" rx="8" fill="#ffe1e6" stroke="#b23a48" stroke-width="3"/>
+            <text x="686" y="164" text-anchor="middle" font-size="17" font-weight="900">Leaf</text>
+            <text x="686" y="188" text-anchor="middle" font-size="13" fill="#5f6572">weak point</text>
+            <line class="flow-line" x1="130" y1="170" x2="185" y2="104" stroke="#087f73" stroke-width="5" marker-end="url(#a-c2f)"/>
+            <line x1="130" y1="170" x2="185" y2="234" stroke="#c2c9d5" stroke-width="3"/>
+            <line class="flow-line" x1="343" y1="104" x2="430" y2="170" stroke="#087f73" stroke-width="5" marker-end="url(#a-c2f)"/>
+            <line class="flow-line" x1="568" y1="170" x2="630" y2="170" stroke="#087f73" stroke-width="5" marker-end="url(#a-c2f)"/>
+          </svg>`
+      },
+      joint: {
+        title: "Compact Joint HEN",
+        detail: "One MobileNetV3-Large feature extractor is shared by top, mid, and leaf heads. Hierarchical supervision keeps the tree structure without duplicating CNNs.",
+        badge: "95.63%, 3.01M",
+        svg: `
+          <svg viewBox="0 0 780 330" role="img" aria-label="Compact Joint HEN">
+            <defs><marker id="a-joint" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#087f73"/></marker></defs>
+            <rect x="36" y="132" width="96" height="76" rx="8" fill="#fff0d6" stroke="#a96400" stroke-width="3"/>
+            <text x="84" y="176" text-anchor="middle" font-size="18" font-weight="800">Input</text>
+            <rect class="pulse" x="204" y="72" width="220" height="196" rx="8" fill="#dff4f1" stroke="#087f73" stroke-width="3"/>
+            <text x="314" y="142" text-anchor="middle" font-size="26" font-weight="900">MobileNetV3-Large</text>
+            <text x="314" y="174" text-anchor="middle" font-size="15" fill="#5f6572">shared feature extractor</text>
+            <text x="314" y="200" text-anchor="middle" font-size="15" fill="#5f6572">one forward pass</text>
+            <rect x="548" y="40" width="150" height="54" rx="8" fill="#e2ebff" stroke="#315fb8" stroke-width="3"/>
+            <rect x="548" y="138" width="150" height="54" rx="8" fill="#e2ebff" stroke="#315fb8" stroke-width="3"/>
+            <rect x="548" y="236" width="150" height="54" rx="8" fill="#e2ebff" stroke="#315fb8" stroke-width="3"/>
+            <text x="623" y="72" text-anchor="middle" font-size="16" font-weight="900">Top head</text>
+            <text x="623" y="170" text-anchor="middle" font-size="16" font-weight="900">Mid heads</text>
+            <text x="623" y="268" text-anchor="middle" font-size="16" font-weight="900">Leaf heads</text>
+            <line class="flow-line" x1="132" y1="170" x2="204" y2="170" stroke="#087f73" stroke-width="5" marker-end="url(#a-joint)"/>
+            <line class="flow-line" x1="424" y1="170" x2="548" y2="67" stroke="#087f73" stroke-width="5" marker-end="url(#a-joint)"/>
+            <line class="flow-line" x1="424" y1="170" x2="548" y2="165" stroke="#087f73" stroke-width="5" marker-end="url(#a-joint)"/>
+            <line class="flow-line" x1="424" y1="170" x2="548" y2="263" stroke="#087f73" stroke-width="5" marker-end="url(#a-joint)"/>
+          </svg>`
+      },
+      delta: {
+        title: "Common-Delta Branches",
+        detail: "Hard branches received parent-specific refinement and common versus difference splits. The idea helped locally, but the overall score stayed below the compact joint baseline.",
+        badge: "local gains, not final",
+        svg: `
+          <svg viewBox="0 0 780 330" role="img" aria-label="Common-delta hard branches">
+            <defs><marker id="a-delta" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#087f73"/></marker></defs>
+            <rect x="32" y="135" width="92" height="70" rx="8" fill="#fff0d6" stroke="#a96400" stroke-width="3"/>
+            <text x="78" y="176" text-anchor="middle" font-size="18" font-weight="800">Input</text>
+            <rect x="178" y="96" width="160" height="148" rx="8" fill="#dff4f1" stroke="#087f73" stroke-width="3"/>
+            <text x="258" y="155" text-anchor="middle" font-size="21" font-weight="900">Shared</text>
+            <text x="258" y="181" text-anchor="middle" font-size="15" fill="#5f6572">feature bank</text>
+            <rect class="pulse" x="408" y="58" width="128" height="58" rx="8" fill="#e2ebff" stroke="#315fb8" stroke-width="3"/>
+            <rect class="pulse" x="408" y="142" width="128" height="58" rx="8" fill="#e2ebff" stroke="#315fb8" stroke-width="3"/>
+            <rect class="pulse" x="408" y="226" width="128" height="58" rx="8" fill="#e2ebff" stroke="#315fb8" stroke-width="3"/>
+            <text x="472" y="93" text-anchor="middle" font-size="14" font-weight="900">parent refiner</text>
+            <text x="472" y="177" text-anchor="middle" font-size="14" font-weight="900">parent refiner</text>
+            <text x="472" y="261" text-anchor="middle" font-size="14" font-weight="900">parent refiner</text>
+            <rect x="610" y="58" width="122" height="58" rx="8" fill="#f3f5f8" stroke="#c2c9d5"/>
+            <rect class="pulse" x="610" y="142" width="122" height="58" rx="8" fill="#dff4f1" stroke="#087f73" stroke-width="3"/>
+            <rect class="pulse" x="610" y="226" width="122" height="58" rx="8" fill="#dff4f1" stroke="#087f73" stroke-width="3"/>
+            <text x="671" y="92" text-anchor="middle" font-size="13" font-weight="800" fill="#5f6572">standard heads</text>
+            <text x="671" y="169" text-anchor="middle" font-size="13" font-weight="900">common</text>
+            <text x="671" y="188" text-anchor="middle" font-size="13" font-weight="900">+ delta</text>
+            <text x="671" y="253" text-anchor="middle" font-size="13" font-weight="900">common</text>
+            <text x="671" y="272" text-anchor="middle" font-size="13" font-weight="900">+ delta</text>
+            <line class="flow-line" x1="124" y1="170" x2="178" y2="170" stroke="#087f73" stroke-width="5" marker-end="url(#a-delta)"/>
+            <line class="flow-line" x1="338" y1="170" x2="408" y2="87" stroke="#087f73" stroke-width="4" marker-end="url(#a-delta)"/>
+            <line class="flow-line" x1="338" y1="170" x2="408" y2="171" stroke="#087f73" stroke-width="4" marker-end="url(#a-delta)"/>
+            <line class="flow-line" x1="338" y1="170" x2="408" y2="255" stroke="#087f73" stroke-width="4" marker-end="url(#a-delta)"/>
+            <line class="flow-line" x1="536" y1="171" x2="610" y2="171" stroke="#087f73" stroke-width="4" marker-end="url(#a-delta)"/>
+            <line class="flow-line" x1="536" y1="255" x2="610" y2="255" stroke="#087f73" stroke-width="4" marker-end="url(#a-delta)"/>
+          </svg>`
+      }
+    };
+
+    const titleEl = document.getElementById("arch-title");
+    const detailEl = document.getElementById("arch-detail");
+    const badgeEl = document.getElementById("arch-badge");
+    const svgEl = document.getElementById("arch-svg");
+    const tabs = Array.from(document.querySelectorAll(".arch-tab"));
+
+    function renderArch(key) {
+      const item = svgTemplates[key];
+      titleEl.textContent = item.title;
+      detailEl.textContent = item.detail;
+      badgeEl.textContent = item.badge;
+      svgEl.innerHTML = item.svg;
+      tabs.forEach(tab => tab.classList.toggle("active", tab.dataset.arch === key));
+    }
+
+    tabs.forEach(tab => tab.addEventListener("click", () => renderArch(tab.dataset.arch)));
+    renderArch("flat");
+
+    async function loadFailureImages() {
+      const grid = document.getElementById("failure-grid");
+      try {
+        const response = await fetch("flat_vs_hen_report_20260501_en.html");
+        const text = await response.text();
+        const doc = new DOMParser().parseFromString(text, "text/html");
+        const examples = Array.from(doc.querySelectorAll(".example-card")).slice(0, 4);
+        if (!examples.length) throw new Error("No examples found");
+        grid.innerHTML = "";
+        examples.forEach((card) => {
+          const img = card.querySelector("img");
+          const title = card.querySelector("h3")?.textContent || "Ambiguous validation image";
+          const body = card.querySelector("p")?.textContent || "Mixed-subject image from the failure review.";
+          const tile = document.createElement("article");
+          tile.className = "image-tile";
+          tile.innerHTML = `<img alt="${title.replace(/"/g, "")}" src="${img.src}"><div><strong>${title}</strong><span>${body}</span></div>`;
+          grid.appendChild(tile);
+        });
+      } catch (error) {
+        grid.innerHTML = `
+          <article class="image-tile"><div><strong>Open with a local server or RawGitHack</strong><span>The presentation loads examples from the detailed HTML report. Direct file access may block that fetch.</span></div></article>
+        `;
+      }
+    }
+
+    loadFailureImages();
+  </script>
+</body>
+</html>
