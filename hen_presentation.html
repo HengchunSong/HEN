@@ -18,6 +18,8 @@
     --text: #e2e8f0;
     --muted: #8892a4;
     --radius: 12px;
+    --nav-h: 56px;
+    --deck-controls-h: 88px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -55,6 +57,7 @@
     white-space: nowrap;
   }
   nav a:hover { color: var(--text); border-color: var(--accent); }
+  nav a.active { color: var(--text); border-color: var(--accent); }
 
   /* HERO */
   .hero {
@@ -124,6 +127,101 @@
 
   /* DIVIDER */
   .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* SLIDE DECK MODE */
+  body.deck-mode { overflow: hidden; }
+  body.deck-mode .divider,
+  body.deck-mode footer { display: none; }
+  .slide { display: none; }
+  .slide.active {
+    display: block;
+    animation: slideReveal .28s ease both;
+  }
+  body.deck-mode .hero.slide.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - var(--nav-h) - var(--deck-controls-h));
+    padding: clamp(2rem, 5vh, 4rem) 2rem;
+  }
+  body.deck-mode section.slide {
+    width: min(1120px, 100%);
+    max-width: 1120px;
+    min-height: calc(100vh - var(--nav-h) - var(--deck-controls-h));
+    max-height: calc(100vh - var(--nav-h) - var(--deck-controls-h));
+    overflow-y: auto;
+    padding: clamp(1.8rem, 4vh, 3rem) 2rem;
+    scrollbar-color: var(--border) transparent;
+  }
+  .deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 1rem;
+    transform: translateX(-50%);
+    z-index: 120;
+    display: grid;
+    grid-template-columns: auto minmax(170px, 260px) auto;
+    align-items: center;
+    gap: .85rem;
+    background: rgba(21,24,32,.9);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: .7rem .85rem;
+    box-shadow: 0 18px 48px rgba(0,0,0,.35);
+    backdrop-filter: blur(14px);
+  }
+  .deck-btn {
+    border: 1px solid var(--border);
+    background: rgba(108,143,255,.12);
+    color: var(--text);
+    border-radius: 999px;
+    padding: .55rem .9rem;
+    font: inherit;
+    font-size: .8rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform .2s, border-color .2s, background .2s, opacity .2s;
+  }
+  .deck-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    border-color: var(--accent);
+    background: rgba(108,143,255,.2);
+  }
+  .deck-btn:disabled {
+    cursor: not-allowed;
+    opacity: .38;
+  }
+  .deck-progress {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    min-width: 0;
+  }
+  .deck-progress span {
+    color: var(--muted);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .deck-track {
+    height: 5px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .deck-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+    border-radius: inherit;
+    transition: width .25s ease;
+  }
+  @keyframes slideReveal {
+    from { opacity: 0; transform: translateY(12px) scale(.992); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
 
   /* CARDS GRID */
   .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
@@ -360,6 +458,27 @@
     nav .logo { margin-right: 1rem; }
     section { padding: 3.5rem 1.25rem; }
     .hero { padding-left: 1.25rem; padding-right: 1.25rem; }
+    body.deck-mode section.slide,
+    body.deck-mode .hero.slide.active {
+      min-height: calc(100vh - var(--nav-h) - var(--deck-controls-h));
+      max-height: calc(100vh - var(--nav-h) - var(--deck-controls-h));
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+    .deck-controls {
+      left: .75rem;
+      right: .75rem;
+      bottom: .75rem;
+      transform: none;
+      grid-template-columns: auto 1fr auto;
+      gap: .55rem;
+      padding: .6rem;
+    }
+    .deck-btn {
+      padding: .5rem .65rem;
+      font-size: .74rem;
+    }
+    .deck-progress span { font-size: .65rem; }
     .arch-metrics { grid-template-columns: 1fr; }
     .res-row {
       display: grid;
@@ -370,7 +489,7 @@
   }
 </style>
 </head>
-<body>
+<body class="deck-mode">
 
 <nav>
   <span class="logo">Flat CNN vs HEN</span>
@@ -380,10 +499,11 @@
   <a href="#journey">Journey</a>
   <a href="#difficulties">Difficulties</a>
   <a href="#resources">Resources</a>
+  <a href="#conclusion">Conclusion</a>
 </nav>
 
 <!-- HERO -->
-<div class="hero">
+<div class="hero slide active" id="hero" data-slide-title="Opening">
   <div class="hero-tag">Research Presentation · 2026</div>
   <h1>Finding the Cheapest Path<br>to 95%</h1>
   <p>Can a hierarchical expert network beat a flat classifier on resource efficiency while keeping accuracy high enough to matter?</p>
@@ -408,7 +528,7 @@
 </div>
 
 <!-- THESIS -->
-<section id="thesis">
+<section id="thesis" class="slide" data-slide-title="Thesis">
   <div class="section-label">Thesis</div>
   <h2>The core question</h2>
   <p>The compact Joint HEN with MobileNetV3-Large reached the same accuracy band as the classic 3-level HEN, but with a radically smaller parameter budget. Flat ConvNeXt-Tiny remains the peak accuracy reference at 96.89%, but at nearly 10× the parameter count.</p>
@@ -437,7 +557,7 @@
 <hr class="divider"/>
 
 <!-- AMBIGUITY -->
-<section id="ambiguity">
+<section id="ambiguity" class="slide" data-slide-title="Why 95%">
   <div class="section-label">Why 95%</div>
   <h2>Why the target is 95%, not perfection</h2>
   <p>Before comparing architecture efficiency, the evaluation needs a practical target. Some validation images mix multiple strong subjects: a bird with fruit, food beside a dominant object, or produce in a market scene. These can be visually reasonable for a human, yet still be counted wrong by the label protocol.</p>
@@ -460,7 +580,7 @@
 <hr class="divider"/>
 
 <!-- ARCHITECTURE -->
-<section id="architecture">
+<section id="architecture" class="slide" data-slide-title="Architecture">
   <div class="section-label">Architecture</div>
   <h2>Architecture evolution</h2>
   <p>The most important shift was not adding more heads—it was learning where the model should share representation and where it should specialize.</p>
@@ -518,7 +638,7 @@
 <hr class="divider"/>
 
 <!-- JOURNEY -->
-<section id="journey">
+<section id="journey" class="slide" data-slide-title="Journey">
   <div class="section-label">Journey</div>
   <h2>The path we took</h2>
   <p>The final result came from a sequence of very practical disappointments. Each one removed a tempting explanation and made the next design sharper.</p>
@@ -569,7 +689,7 @@
 <hr class="divider"/>
 
 <!-- DIFFICULTIES -->
-<section id="difficulties">
+<section id="difficulties" class="slide" data-slide-title="Difficulties">
   <div class="section-label">Difficulties & Fixes</div>
   <h2>What failed, and why that matters</h2>
   <p>The failure map explains why the final architecture is shaped the way it is.</p>
@@ -610,7 +730,7 @@
 <hr class="divider"/>
 
 <!-- RESOURCES -->
-<section id="resources">
+<section id="resources" class="slide" data-slide-title="Resources">
   <div class="section-label">Resources</div>
   <h2>Resource story</h2>
   <p>At the 95% threshold, compact HEN wins on verified resource efficiency. Flat ConvNeXt-Tiny still wins on peak accuracy.</p>
@@ -678,7 +798,7 @@
 <hr class="divider"/>
 
 <!-- FINAL -->
-<section>
+<section id="conclusion" class="slide" data-slide-title="Conclusion">
   <div class="section-label">Conclusion</div>
   <h2>Final take</h2>
   <p>The hierarchy is worth keeping when it reduces resource cost without sacrificing the accuracy band that matters.</p>
@@ -694,12 +814,98 @@
   </div>
 </section>
 
+<div class="deck-controls" aria-label="Slide navigation">
+  <button class="deck-btn" id="prevSlide" type="button">Previous</button>
+  <div class="deck-progress" aria-live="polite">
+    <span id="slideCounter">1 / 8</span>
+    <div class="deck-track"><div class="deck-fill" id="slideProgress"></div></div>
+  </div>
+  <button class="deck-btn" id="nextSlide" type="button">Next</button>
+</div>
+
 <footer>
   Source report: <a href="https://raw.githack.com/HengchunSong/HEN/main/outputs/flat_vs_hen_report_20260501_en.html" target="_blank">Flat CNN vs HEN Comparative Report</a> &nbsp;·&nbsp;
   Repository: <a href="https://github.com/HengchunSong/HEN" target="_blank">github.com/HengchunSong/HEN</a>
 </footer>
 
 <script>
+const slides = Array.from(document.querySelectorAll(".slide"));
+const navLinks = Array.from(document.querySelectorAll('nav a[href^="#"]'));
+const prevSlideButton = document.getElementById("prevSlide");
+const nextSlideButton = document.getElementById("nextSlide");
+const slideCounter = document.getElementById("slideCounter");
+const slideProgress = document.getElementById("slideProgress");
+let currentSlideIndex = 0;
+
+function slideIndexFromHash() {
+  const targetId = window.location.hash.replace("#", "");
+  const index = slides.findIndex(slide => slide.id === targetId);
+  return index >= 0 ? index : 0;
+}
+
+function showSlide(index, updateHash = true) {
+  const nextIndex = Math.max(0, Math.min(index, slides.length - 1));
+  currentSlideIndex = nextIndex;
+  slides.forEach((slide, slideIndex) => {
+    const isActive = slideIndex === nextIndex;
+    slide.classList.toggle("active", isActive);
+    slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+    if (isActive) slide.scrollTop = 0;
+  });
+
+  const activeSlide = slides[nextIndex];
+  const activeHash = `#${activeSlide.id}`;
+  navLinks.forEach(link => {
+    link.classList.toggle("active", link.getAttribute("href") === activeHash);
+  });
+
+  prevSlideButton.disabled = nextIndex === 0;
+  nextSlideButton.disabled = nextIndex === slides.length - 1;
+  slideCounter.textContent = `${nextIndex + 1} / ${slides.length} · ${activeSlide.dataset.slideTitle || activeSlide.id}`;
+  slideProgress.style.width = `${((nextIndex + 1) / slides.length) * 100}%`;
+
+  if (updateHash && window.location.hash !== activeHash) {
+    history.replaceState(null, "", activeHash);
+  }
+}
+
+prevSlideButton.addEventListener("click", () => showSlide(currentSlideIndex - 1));
+nextSlideButton.addEventListener("click", () => showSlide(currentSlideIndex + 1));
+
+navLinks.forEach(link => {
+  link.addEventListener("click", event => {
+    const targetId = link.getAttribute("href").replace("#", "");
+    const targetIndex = slides.findIndex(slide => slide.id === targetId);
+    if (targetIndex < 0) return;
+    event.preventDefault();
+    showSlide(targetIndex);
+  });
+});
+
+document.addEventListener("keydown", event => {
+  if (event.altKey || event.ctrlKey || event.metaKey) return;
+  if (event.target.closest("input, textarea, select")) return;
+  if (["ArrowRight", "PageDown", " "].includes(event.key)) {
+    event.preventDefault();
+    showSlide(currentSlideIndex + 1);
+  }
+  if (["ArrowLeft", "PageUp"].includes(event.key)) {
+    event.preventDefault();
+    showSlide(currentSlideIndex - 1);
+  }
+  if (event.key === "Home") {
+    event.preventDefault();
+    showSlide(0);
+  }
+  if (event.key === "End") {
+    event.preventDefault();
+    showSlide(slides.length - 1);
+  }
+});
+
+window.addEventListener("hashchange", () => showSlide(slideIndexFromHash(), false));
+showSlide(slideIndexFromHash(), false);
+
 const diagrams = {
   flat: {
     caption: "<strong>Flat CNN:</strong> one full backbone, one 27-way classifier.",
