@@ -244,6 +244,130 @@
   .badge-red { background: rgba(248,113,113,.12); color: var(--red); }
   .badge-blue { background: rgba(108,143,255,.15); color: var(--accent); }
 
+  /* HIERARCHY MAP */
+  .hierarchy-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .85rem;
+    margin-bottom: 1.2rem;
+  }
+  .hierarchy-stat {
+    background: rgba(108,143,255,.08);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+  }
+  .hierarchy-stat strong {
+    display: block;
+    color: var(--text);
+    font-size: 1.55rem;
+    line-height: 1;
+  }
+  .hierarchy-stat span {
+    display: block;
+    color: var(--muted);
+    font-size: .76rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    margin-top: .45rem;
+    text-transform: uppercase;
+  }
+  .hierarchy-map {
+    display: grid;
+    grid-template-columns: .8fr 1fr 1.35fr;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  .hierarchy-column {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+  }
+  .hierarchy-column:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -.76rem;
+    width: .55rem;
+    height: .55rem;
+    border-top: 2px solid var(--accent);
+    border-right: 2px solid var(--accent);
+    transform: translateY(-50%) rotate(45deg);
+    opacity: .8;
+  }
+  .hierarchy-column h3 {
+    color: var(--muted);
+    font-size: .74rem;
+    letter-spacing: .1em;
+    margin-bottom: .8rem;
+    text-transform: uppercase;
+  }
+  .hierarchy-stack { display: flex; flex-direction: column; gap: .75rem; }
+  .tree-node {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: .7rem .8rem;
+    background: rgba(13,15,20,.45);
+  }
+  .tree-node strong {
+    display: block;
+    color: var(--text);
+    font-size: .92rem;
+    line-height: 1.25;
+  }
+  .tree-node span {
+    display: block;
+    color: var(--muted);
+    font-size: .72rem;
+    line-height: 1.35;
+    margin-top: .2rem;
+  }
+  .tree-node.animal { border-color: rgba(52,211,153,.45); }
+  .tree-node.vehicle { border-color: rgba(108,143,255,.48); }
+  .tree-node.food { border-color: rgba(251,191,36,.48); }
+  .branch-block {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: .75rem;
+    background: rgba(13,15,20,.35);
+  }
+  .branch-title {
+    color: var(--muted);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    margin-bottom: .55rem;
+    text-transform: uppercase;
+  }
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+  }
+  .mid-chip,
+  .leaf-chip {
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    background: rgba(108,143,255,.08);
+    font-size: .72rem;
+    line-height: 1;
+    padding: .42rem .55rem;
+  }
+  .leaf-chip {
+    color: var(--muted);
+    background: rgba(13,15,20,.55);
+    font-size: .68rem;
+  }
+  .hierarchy-note {
+    color: var(--muted);
+    font-size: .84rem;
+    line-height: 1.65;
+    margin-top: 1rem;
+  }
+
   /* ARCHITECTURE DEMO */
   .architecture-demo {
     margin-top: 1.1rem;
@@ -458,6 +582,13 @@
     nav .logo { margin-right: 1rem; }
     section { padding: 3.5rem 1.25rem; }
     .hero { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .hierarchy-summary,
+    .hierarchy-map {
+      grid-template-columns: 1fr;
+    }
+    .hierarchy-column:not(:last-child)::after {
+      display: none;
+    }
     body.deck-mode section.slide,
     body.deck-mode .hero.slide.active {
       min-height: calc(100vh - var(--nav-h) - var(--deck-controls-h));
@@ -495,6 +626,7 @@
   <span class="logo">Flat CNN vs HEN</span>
   <a href="#thesis">Thesis</a>
   <a href="#ambiguity">Why 95%</a>
+  <a href="#hierarchy">3-9-27</a>
   <a href="#architecture">Architecture</a>
   <a href="#journey">Journey</a>
   <a href="#difficulties">Difficulties</a>
@@ -575,6 +707,112 @@
       </div>
     </div>
   </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- HIERARCHY MAP -->
+<section id="hierarchy" class="slide" data-slide-title="3-9-27 Map">
+  <div class="section-label">Hierarchy Map</div>
+  <h2>The task is already a 3-9-27 tree</h2>
+  <p>The HEN architecture mirrors the dataset structure: first decide the broad domain, then the mid-level family, then the exact leaf class. This is the reason a three-level model is meaningful rather than arbitrary.</p>
+
+  <div class="hierarchy-summary">
+    <div class="hierarchy-stat"><strong>3</strong><span>coarse groups</span></div>
+    <div class="hierarchy-stat"><strong>9</strong><span>mid-level groups</span></div>
+    <div class="hierarchy-stat"><strong>27</strong><span>leaf classes</span></div>
+  </div>
+
+  <div class="hierarchy-map" aria-label="3 to 9 to 27 hierarchy diagram">
+    <div class="hierarchy-column">
+      <h3>Level 1 · Coarse</h3>
+      <div class="hierarchy-stack">
+        <div class="tree-node animal"><strong>Animal</strong><span>living subjects</span></div>
+        <div class="tree-node vehicle"><strong>Vehicle</strong><span>transport objects</span></div>
+        <div class="tree-node food"><strong>Food</strong><span>edible objects</span></div>
+      </div>
+    </div>
+
+    <div class="hierarchy-column">
+      <h3>Level 2 · Mid</h3>
+      <div class="hierarchy-stack">
+        <div class="branch-block">
+          <div class="branch-title">Animal</div>
+          <div class="chip-row">
+            <span class="mid-chip">bird</span>
+            <span class="mid-chip">canine</span>
+            <span class="mid-chip">feline</span>
+          </div>
+        </div>
+        <div class="branch-block">
+          <div class="branch-title">Vehicle</div>
+          <div class="chip-row">
+            <span class="mid-chip">aircraft</span>
+            <span class="mid-chip">road vehicle</span>
+            <span class="mid-chip">watercraft</span>
+          </div>
+        </div>
+        <div class="branch-block">
+          <div class="branch-title">Food</div>
+          <div class="chip-row">
+            <span class="mid-chip">fruit</span>
+            <span class="mid-chip">vegetable</span>
+            <span class="mid-chip">prepared food</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hierarchy-column">
+      <h3>Level 3 · Leaf</h3>
+      <div class="hierarchy-stack">
+        <div class="branch-block">
+          <div class="branch-title">Animal leaves</div>
+          <div class="chip-row">
+            <span class="leaf-chip">goldfinch</span>
+            <span class="leaf-chip">robin</span>
+            <span class="leaf-chip">bald eagle</span>
+            <span class="leaf-chip">golden retriever</span>
+            <span class="leaf-chip">german shepherd</span>
+            <span class="leaf-chip">doberman</span>
+            <span class="leaf-chip">persian cat</span>
+            <span class="leaf-chip">siamese cat</span>
+            <span class="leaf-chip">egyptian cat</span>
+          </div>
+        </div>
+        <div class="branch-block">
+          <div class="branch-title">Vehicle leaves</div>
+          <div class="chip-row">
+            <span class="leaf-chip">airliner</span>
+            <span class="leaf-chip">airship</span>
+            <span class="leaf-chip">warplane</span>
+            <span class="leaf-chip">ambulance</span>
+            <span class="leaf-chip">fire engine</span>
+            <span class="leaf-chip">sports car</span>
+            <span class="leaf-chip">canoe</span>
+            <span class="leaf-chip">container ship</span>
+            <span class="leaf-chip">speedboat</span>
+          </div>
+        </div>
+        <div class="branch-block">
+          <div class="branch-title">Food leaves</div>
+          <div class="chip-row">
+            <span class="leaf-chip">lemon</span>
+            <span class="leaf-chip">banana</span>
+            <span class="leaf-chip">pomegranate</span>
+            <span class="leaf-chip">broccoli</span>
+            <span class="leaf-chip">cauliflower</span>
+            <span class="leaf-chip">cucumber</span>
+            <span class="leaf-chip">cheeseburger</span>
+            <span class="leaf-chip">hotdog</span>
+            <span class="leaf-chip">pizza</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="hierarchy-note">This tree is the core modularity target: adding a new leaf should ideally touch its local branch while leaving sibling branches intact.</p>
 </section>
 
 <hr class="divider"/>
@@ -817,7 +1055,7 @@
 <div class="deck-controls" aria-label="Slide navigation">
   <button class="deck-btn" id="prevSlide" type="button">Previous</button>
   <div class="deck-progress" aria-live="polite">
-    <span id="slideCounter">1 / 8</span>
+    <span id="slideCounter">1 / 9</span>
     <div class="deck-track"><div class="deck-fill" id="slideProgress"></div></div>
   </div>
   <button class="deck-btn" id="nextSlide" type="button">Next</button>
