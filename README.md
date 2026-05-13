@@ -5,6 +5,7 @@ Hierarchical Expert Networks experiments on a balanced 27-class ImageNet subset 
 ## Open the report
 
 - Run in Colab: [HEN Colab notebook](https://colab.research.google.com/github/HengchunSong/HEN/blob/main/colab/HEN_Colab.ipynb)
+- Final experiment notebook: [HEN Final Experiments Report](https://colab.research.google.com/github/HengchunSong/HEN/blob/main/colab/HEN_Final_Experiments_Report.ipynb)
 - Presentation web page: [HEN Presentation](https://raw.githack.com/HengchunSong/HEN/main/hen_presentation.html)
 - Rendered HTML report: [Flat CNN vs HEN Comparative Report](https://raw.githack.com/HengchunSong/HEN/main/outputs/flat_vs_hen_report_20260501_en.html)
 - Report source file: [outputs/flat_vs_hen_report_20260501_en.html](https://github.com/HengchunSong/HEN/blob/main/outputs/flat_vs_hen_report_20260501_en.html)
